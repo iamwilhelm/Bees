@@ -19,9 +19,10 @@ defmodule Bees.Venue do
     end
   end
 
-  def search(client, latitude, longitude, limit \\ 10, intent \\ "checkin", radius \\ 800) do
+  def search(client, latitude, longitude, query \\ "", limit \\ 10, intent \\ "checkin", radius \\ 800) do
     params = [
       ll: "#{latitude},#{longitude}",
+      query: query,
       intent: intent,
       radius: radius,
       limit: limit,
