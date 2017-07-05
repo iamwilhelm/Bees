@@ -42,7 +42,7 @@ defmodule Bees.Venue do
   defp decode_many(body) do
     mapping = %{
       "response" => %{
-        "venues" => [decoder]
+        "venues" => [decoder()]
       }
     }
 
@@ -52,7 +52,7 @@ defmodule Bees.Venue do
   defp decode_single(body) do
     mapping = %{
       "response" => %{
-        "venue" => decoder
+        "venue" => decoder()
       }
     }
 

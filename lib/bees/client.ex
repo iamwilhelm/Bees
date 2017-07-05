@@ -33,16 +33,13 @@ defmodule Bees.Client do
 
   # Private Helpers
 
-  defp add_default_headers(client, headers, authenticated) do 
-    headers = [user_agent_header()] ++ headers
+  defp add_default_headers(_client, headers, _authenticated) do
+    [user_agent_header()] ++ headers
   end
 
   defp add_default_parameters(client, params, authenticated) do
     params = [ client_id: client.client_id, client_secret: client.client_secret ] ++ params
-    if authenticated do
-      params = [ oauth_token: client.access_token ] ++ params
-    end
-    params
+    if authenticated, do: [ oauth_token: client.access_token ] ++ params, else: params
   end
 
   defp user_agent_header() do
@@ -51,10 +48,9 @@ defmodule Bees.Client do
 
   defp url(path, :empty), do: "https://api.foursquare.com/v2" <> path
   defp url(path, params) do
-    uri =
     url(path, :empty)
-    |> URI.parse
-    |> Map.put(:query, Plug.Conn.Query.encode(params))
-    URI.to_string(uri)
+      |> URI.parse
+      |> Map.put(:query, Plug.Conn.Query.encode(params))
+      |> URI.to_string
   end
 end
